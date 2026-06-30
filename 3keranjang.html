@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keranjang — Mie Ayam Bangka Awat</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #FAFAF7; --bg2: #F2EDE6; --card: #FFFFFF; --nav: #FFFFFF;
+      --text: #1A1007; --sub: #6B5B4E; --accent: #C62828; --gold: #E8A000;
+      --green: #2E7D32; --border: rgba(200,170,130,0.25); --shadow: rgba(80,40,10,0.10);
+    }
+    .dark {
+      --bg: #100B07; --bg2: #1A120A; --card: #1E1610; --nav: #1E1610;
+      --text: #F5ECD8; --sub: #B09080; --border: rgba(200,150,80,0.15); --shadow: rgba(0,0,0,0.35);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+    body { background: var(--bg); color: var(--text); padding-bottom: 60px; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; background: var(--nav); box-shadow: 0 4px 20px var(--shadow); }
+    nav h1 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--accent); }
+    nav ul { display: flex; gap: 25px; list-style: none; align-items: center; }
+    nav a { text-decoration: none; color: var(--sub); font-size: 14px; }
+    nav a.active { color: var(--accent); font-weight:600; }
+    
+    .main-layout { max-width: 1200px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: 1.6fr 1fr; gap: 40px; }
+    @media (max-width: 850px) { .main-layout { grid-template-columns: 1fr; } }
+    
+    .cart-section, .checkout-section { background: var(--card); border-radius: 16px; padding: 30px; box-shadow: 0 8px 24px var(--shadow); border: 1px solid var(--border); }
+    h2 { font-family: 'Playfair Display', serif; font-size: 24px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+    
+    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px dashed var(--border); }
+    .item-info h4 { font-size: 15px; font-weight: 600; }
+    .item-info p { font-size: 13px; color: var(--sub); }
+    .item-actions { display: flex; align-items: center; gap: 12px; }
+    .qty-btn { background: var(--bg2); border: 1px solid var(--border); width: 28px; height: 28px; border-radius: 50%; font-weight: 600; cursor: pointer; color: var(--text); }
+    .qty-btn:hover { background: var(--accent); color: white; }
+    
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; color: var(--sub); }
+    .form-group select, .form-group textarea { width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 14px; }
+    
+    .summary-line { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 10px; color: var(--sub); }
+    .summary-line.total { border-top: 1px solid var(--border); padding-top: 15px; font-size: 18px; font-weight: 700; color: var(--accent); }
+    
+    .order-btn { width: 100%; background: var(--accent); color: white; border: none; padding: 14px; border-radius: 30px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 15px; }
+    .order-btn:hover { background: #A01B1B; }
+    
+    #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #1A1007; color: #FFF; padding: 12px 30px; border-radius: 30px; font-size: 13px; opacity: 0; transition: all 0.4s; z-index: 1000; }
+    #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    .toggle-dark { background: none; border: none; cursor: pointer; font-size: 16px; }
+  </style>
+</head>
+<body id="body">
+
+  <nav>
+    <h1>🍜 Mie Ayam Awat</h1>
+    <ul>
+      <li><a href="/1index.html">Beranda</a></li>
+      <li><a href="/2menu.html">Menu</a></li>
+      <li><a href="/3keranjang.html" class="active">Keranjang</a></li>
+      <li><button class="toggle-dark" onclick="toggleDark()">🌙</button></li>
+    </ul>
+  </nav>
+
+  <div class="main-layout">
+    <div class="cart-section">
+      <h2>Daftar Pesanan Anda</h2>
+      <div id="cartItemsContainer"></div>
+    </div>
+
+    <div class="checkout-section">
+      <h2>Detail Meja & Pembayaran</h2>
+      <div class="form-group">
+        <label>Pilih Nomor Meja Makan</label>
+        <select id="selectMeja"><option value="">-- Pilih Meja --</option></select>
+      </div>
+      <div class="form-group">
+        <label>Catatan Tambahan (Opsional)</label>
+        <textarea id="catatanPesanan" rows="2" placeholder="Contoh: Mie kuah dipisah, tidak pakai daun bawang..."></textarea>
+      </div>
+
+      <h2>Ringkasan Biaya</h2>
+      <div class="summary-line"><span>Subtotal Produk</span><span id="txtSubtotal">Rp 0</span></div>
+      <div class="summary-line"><span>Pajak (<span id="lblPajak">10</span>%)</span><span id="txtPajak">Rp 0</span></div>
+      <div class="summary-line"><span>Service Fee</span><span id="txtService">Rp 0</span></div>
+      <div class="summary-line total"><span>Total Akhir</span><span id="txtTotal">Rp 0</span></div>
+
+      <button class="order-btn" onclick="prosesBayarMidtrans()">Bayar Sekarang (Midtrans)</button>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script src="api.js"></script>
+  <script id="midtrans-snap-script" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key=""></script>
+  <script>
+    let cart = JSON.parse(localStorage.getItem('sys_cart')) || {};
+    let menuData = [];
+    let backendSettings = { taxRate: 0, serviceFeeRate: 0, tableCount: 15, currency: 'IDR' };
+    let midtransClientKey = '';
+
+    async function initMejaDropdown() {
+      const select = document.getElementById('selectMeja');
+      select.innerHTML = '<option value="">-- Pilih Meja --</option>';
+
+      try {
+        const tablesRes = await API.meja.list();
+        const tables = tablesRes?.data;
+        if (Array.isArray(tables)) {
+          tables.forEach(t => {
+            const idNumeric = String(t.id).replace(/^T/i, '');
+            let labelStatus = t.status === 'kosong' ? '' : ` (${String(t.status).toUpperCase()})`;
+            select.innerHTML += `<option value="${t.id}">Meja #${idNumeric}${labelStatus}</option>`;
+          });
+          return;
+        }
+      } catch (e) {}
+
+      // fallback jika API gagal
+      const count = Number(backendSettings.tableCount) || 15;
+      for (let i = 1; i <= count; i++) {
+        select.innerHTML += `<option value="T${i}">Meja #${i}</option>`;
+      }
+    }
+
+    function calcCartTotals() {
+      let subtotal = 0;
+      Object.keys(cart).forEach(id => {
+        const item = menuData.find(m => String(m.id) == String(id));
+        if (item && cart[id] > 0) subtotal += (Number(item.price) || 0) * (Number(cart[id]) || 0);
+      });
+
+      const tax = Math.round(subtotal * (Number(backendSettings.taxRate) || 0));
+      const serviceFee = Math.round(subtotal * (Number(backendSettings.serviceFeeRate) || 0));
+      const total = subtotal + tax + serviceFee;
+      return { subtotal, tax, serviceFee, total };
+    }
+
+    async function loadBackendData() {
+      try {
+        const menuRes = await API.menu.list();
+        menuData = Array.isArray(menuRes?.data) ? menuRes.data : [];
+      } catch (e) {
+        menuData = [];
+      }
+
+      try {
+        const sRes = await API.settings.get();
+        const s = sRes?.data || {};
+        backendSettings = {
+          taxRate: Number(s.taxRate || 0),
+          serviceFeeRate: Number(s.serviceFeeRate || 0),
+          tableCount: Number(s.tableCount || 15),
+          currency: s.currency || 'IDR'
+        };
+      } catch (e) {
+        backendSettings = { taxRate: 0, serviceFeeRate: 0, tableCount: 15, currency: 'IDR' };
+      }
+    }
+
+    function renderCart() {
+      const container = document.getElementById('cartItemsContainer');
+      container.innerHTML = '';
+      
+      let subtotal = 0;
+      let hasItems = false;
+
+      Object.keys(cart).forEach(id => {
+        const item = menuData.find(m => String(m.id) === String(id));
+        if(item && cart[id] > 0) {
+          hasItems = true;
+          let totalItemPrice = item.price * cart[id];
+          subtotal += totalItemPrice;
+
+          container.innerHTML += `
+            <div class="cart-item">
+              <div class="item-info">
+                <h4>${item.name}</h4>
+                <p>Rp ${item.price.toLocaleString('id-ID')} x ${cart[id]}</p>
+              </div>
+              <div class="item-actions">
+                <span style="font-weight:600; margin-right:10px;">Rp ${totalItemPrice.toLocaleString('id-ID')}</span>
+                <button class="qty-btn" onclick="ubahQty('${item.id}', -1)">-</button>
+                <strong>${cart[id]}</strong>
+                <button class="qty-btn" onclick="ubahQty('${item.id}', 1)">+</button>
+              </div>
+            </div>
+          `;
+        }
+      });
+
+      if(!hasItems) {
+        container.innerHTML = `<div style="text-align:center; padding:40px; color:var(--sub)">Keranjang belanja kosong. Silakan tambah menu.</div>`;
+      }
+
+      // Hitung total mengikuti backend: taxRate & serviceFeeRate adalah RATE (0.1 = 10%)
+      const nilaiPajak = Math.round(subtotal * (Number(backendSettings.taxRate) || 0));
+      const nilaiService = Math.round(subtotal * (Number(backendSettings.serviceFeeRate) || 0));
+      const totalAkhir = subtotal + nilaiPajak + nilaiService;
+      const persenPajak = Math.round((Number(backendSettings.taxRate) || 0) * 100);
+
+      document.getElementById('lblPajak').textContent = persenPajak;
+      document.getElementById('txtSubtotal').textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
+      document.getElementById('txtPajak').textContent = `Rp ${nilaiPajak.toLocaleString('id-ID')}`;
+      document.getElementById('txtService').textContent = `Rp ${nilaiService.toLocaleString('id-ID')}`;
+      document.getElementById('txtTotal').textContent = `Rp ${totalAkhir.toLocaleString('id-ID')}`;
+    }
+
+    window.ubahQty = function(id, delta) {
+      const key = String(id);
+      cart[key] = (cart[key] || 0) + delta;
+      if(cart[key] <= 0) delete cart[key];
+      localStorage.setItem('sys_cart', JSON.stringify(cart));
+      renderCart();
+    }
+
+    window.prosesBayarMidtrans = async function() {
+      const mejaId = document.getElementById('selectMeja').value;
+      if(!mejaId) return alert("Pilih nomor meja makan Anda!");
+
+      let orderItems = [];
+      Object.keys(cart).forEach(id => {
+        const target = menuData.find(m => String(m.id) == String(id));
+        if(target && cart[id] > 0) {
+          orderItems.push({ name: target.name, qty: cart[id], price: Number(target.price) || 0 });
+        }
+      });
+
+      if(orderItems.length === 0) return alert("Keranjang belanja kosong!");
+
+      try {
+        const payload = {
+          meja: mejaId,
+          status: 'baru',
+          catatan: document.getElementById('catatanPesanan').value || '',
+          items: orderItems,
+          timestamp: Date.now()
+        };
+
+        const res = await API.orders.create(payload);
+        if(!res?.success || !res?.data?.ok || !res?.data?.orderId) {
+          return alert(`Gagal membuat order: ${res?.error || 'Unknown error'}`);
+        }
+
+        const totals = calcCartTotals();
+
+        const tokenResRaw = await fetch('/api/payments/midtrans/token', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            order_id: res.data.orderId,
+            customer_name: 'Pelanggan'
+          })
+        });
+        const tokenRes = await tokenResRaw.json();
+
+        if (!tokenRes?.ok || !tokenRes?.token || !tokenRes?.clientKey) {
+          return alert(`Gagal membuat token Midtrans: ${tokenRes?.error || 'Unknown error'}`);
+        }
+
+        midtransClientKey = tokenRes.clientKey;
+        const snapScript = document.getElementById('midtrans-snap-script');
+        if (!snapScript) return alert('Script Midtrans tidak ditemukan.');
+
+        if (snapScript.getAttribute('data-client-key') !== midtransClientKey) {
+          snapScript.setAttribute('data-client-key', midtransClientKey);
+        }
+
+        if (!window.snap || typeof window.snap.pay !== 'function') {
+          return alert('Midtrans Snap belum siap. Refresh halaman lalu coba lagi.');
+        }
+
+        window.snap.pay(tokenRes.token, {
+          onSuccess: async function() {
+            const payRes = await API.orders.bayar(res.data.orderId, totals.total, 'midtrans');
+
+            if (!payRes?.success || !payRes?.data?.ok) {
+              return alert(`Pembayaran sukses di Midtrans, tapi gagal simpan ke backend: ${payRes?.error || 'Unknown error'}`);
+            }
+
+            localStorage.removeItem('sys_cart');
+            cart = {};
+            renderCart();
+            await initMejaDropdown();
+            alert(`Pembayaran berhasil! Order ${res.data.orderId} sudah lunas.`);
+          },
+          onPending: function() {
+            alert('Transaksi pending. Silakan selesaikan pembayaran di Midtrans.');
+          },
+          onError: function(result) {
+            alert(`Pembayaran gagal: ${result?.status_message || 'Unknown error'}`);
+          },
+          onClose: function() {
+            alert('Popup pembayaran ditutup sebelum transaksi selesai.');
+          }
+        });
+      } catch (e) {
+        alert(`Gagal proses pembayaran: ${e.message || e}`);
+      }
+    }
+
+    function toggleDark() {
+      document.getElementById('body').classList.toggle('dark');
+      localStorage.setItem('darkMode', document.getElementById('body').classList.contains('dark'));
+    }
+    if (localStorage.getItem('darkMode') === 'true') document.getElementById('body').classList.add('dark');
+
+    (async function bootstrap() {
+      await loadBackendData();
+      await initMejaDropdown();
+      renderCart();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Mie Ayam Bangka Awat</title>
+  <style>
+    *{box-sizing:border-box;font-family:system-ui,sans-serif;margin:0;padding:0}
+    body{background:#1a1a1a;color:#eee;padding:20px}
+    h1{color:#e8a000;margin-bottom:20px}
+    .card{background:#2a2a2a;padding:20px;border-radius:12px;margin-bottom:20px}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:12px;text-align:left;border-bottom:1px solid #444}
+    th{color:#e8a000}
+    .btn{background:#e8a000;color:#1a1a1a;padding:8px 16px;border:none;border-radius:6px;cursor:pointer;font-weight:700}
+    .btn:hover{background:#ffc000}
+  </style>
+</head>
+<body>
+  <h1>🍜 Admin Mie Ayam Awat</h1>
+  <div class="card">
+    <h2>Menu Aplikasi</h2>
+    <p><a href="/kasir.html" style="color:#e8a000">Kasir</a> | <a href="/1index.html" style="color:#e8a000">Beranda</a> | <a href="/2menu.html" style="color:#e8a000">Menu</a> | <a href="/3keranjang.html" style="color:#e8a000">Keranjang</a></p>
+  </div>
+  <div class="card">
+    <h2>Data View</h2>
+    <button class="btn" onclick="loadData()">Refresh Data</button>
+    <div id="output" style="margin-top:20px"></div>
+  </div>
+  <script src="db-view.js"></script>
+  <script>
+    async function loadData() {
+      try {
+        const res = await fetch('/api/db-view');
+        const data = await res.json();
+        document.getElementById('output').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+      } catch(e) {
+        document.getElementById('output').innerHTML = '<p style="color:red">Error: ' + e.message + '</p>';
+      }
+    }
+    loadData();
+  </script>
+</body>
+</html>

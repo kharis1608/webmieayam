@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu — Mie Ayam Bangka Awat</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #FAFAF7; --bg2: #F2EDE6; --card: #FFFFFF; --nav: #FFFFFF;
+      --text: #1A1007; --sub: #6B5B4E; --accent: #C62828; --gold: #E8A000;
+      --border: rgba(200,170,130,0.25); --shadow: rgba(80,40,10,0.10);
+    }
+    .dark {
+      --bg: #100B07; --bg2: #1A120A; --card: #1E1610; --nav: #1E1610;
+      --text: #F5ECD8; --sub: #B09080; --border: rgba(200,150,80,0.15); --shadow: rgba(0,0,0,0.35);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+    body { background: var(--bg); color: var(--text); padding-bottom: 60px; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; background: var(--nav); box-shadow: 0 4px 20px var(--shadow); position: sticky; top:0; z-index:100; }
+    nav h1 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--accent); }
+    nav ul { display: flex; gap: 25px; list-style: none; align-items: center; }
+    nav a { text-decoration: none; color: var(--sub); font-size: 14px; font-weight: 500; }
+    nav a:hover, nav a.active { color: var(--accent); font-weight:600; }
+    
+    .cart-btn-nav { position: relative; background: var(--accent); color: white; padding: 8px 16px; border-radius: 20px; text-decoration: none; font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 6px; }
+    .cart-count { background: var(--gold); color: #1A1007; font-size: 11px; padding: 2px 7px; border-radius: 10px; font-weight: 700; }
+    
+    .header-banner { text-align: center; padding: 50px 20px; background: var(--bg2); border-bottom: 1px solid var(--border); }
+    .header-banner h2 { font-family: 'Playfair Display', serif; font-size: 36px; margin-bottom: 8px; }
+    .header-banner p { color: var(--sub); font-size: 14px; }
+    
+    .filter-container { display: flex; justify-content: center; gap: 12px; margin: 30px auto; padding: 0 20px; max-width: 1200px; flex-wrap: wrap; }
+    .filter-btn { background: var(--card); border: 1px solid var(--border); padding: 10px 24px; border-radius: 30px; color: var(--sub); font-weight: 500; cursor: pointer; font-size: 13px; box-shadow: 0 2px 8px var(--shadow); }
+    .filter-btn.active, .filter-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+    
+    .menu-grid { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
+    .menu-card { background: var(--card); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 24px var(--shadow); border: 1px solid var(--border); display: flex; flex-direction: column; }
+    .img-box { width: 100%; height: 210px; background: #EEE; overflow: hidden; position: relative; }
+    .img-box img { width: 100%; height: 100%; object-fit: cover; }
+    .card-body { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
+    .card-body h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .card-body .desc { color: var(--sub); font-size: 12px; line-height: 1.5; margin-bottom: 15px; flex-grow: 1; }
+    .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--border); padding-top: 15px; }
+    .price { font-weight: 700; color: var(--accent); font-size: 16px; }
+    .add-btn { background: var(--bg2); border: 1px solid var(--border); color: var(--text); font-weight: 600; font-size: 12px; padding: 8px 16px; border-radius: 20px; cursor: pointer; }
+    .add-btn:hover, .add-btn.added { background: var(--accent); color: white; border-color: var(--accent); }
+    
+    #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #1A1007; color: #FFF; padding: 12px 30px; border-radius: 30px; font-size: 13px; font-weight: 500; opacity: 0; transition: all 0.4s; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+    #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    .toggle-dark { background: none; border: none; cursor: pointer; font-size: 16px; margin-left: 5px; }
+  </style>
+</head>
+<body id="body">
+
+  <nav>
+    <h1>🍜 Mie Ayam Awat</h1>
+    <ul>
+      <li><a href="/1index.html">Beranda</a></li>
+      <li><a href="/2menu.html" class="active">Menu</a></li>
+      <li><a href="/3keranjang.html">Keranjang</a></li>
+      <li>
+        <a href="/3keranjang.html" class="cart-btn-nav">
+          🛒 Keranjang <span class="cart-count" id="cartCount">0</span>
+        </a>
+      </li>
+      <li><button class="toggle-dark" onclick="toggleDark()">🌙</button></li>
+    </ul>
+  </nav>
+
+  <div class="header-banner">
+    <h2>Daftar Menu Pilihan</h2>
+    <p>Silakan pilih hidangan lezat favorit Anda dari kategori di bawah ini.</p>
+  </div>
+
+  <div class="filter-container">
+    <button class="filter-btn active" onclick="filter('semua', this)">Semua Hidangan</button>
+    <button class="filter-btn" onclick="filter('mie', this)">Bakmi & Kwetiau</button>
+    <button class="filter-btn" onclick="filter('snack', this)">Camilan / Pempek</button>
+    <button class="filter-btn" onclick="filter('minuman', this)">Minuman Segar</button>
+  </div>
+
+  <div class="menu-grid" id="menuGrid"></div>
+
+  <div id="toast"></div>
+
+  <script src="api.js"></script>
+  <script>
+    const fallbackMenu = [
+      { id:'M1', name:'Mie Ayam', category:'mie', price:25000, desc:'Mie lembut dengan topping ayam cincang berbumbu khas Bangka, daun bawang, dan kuah gurih.', img:'https://images.unsplash.com/photo-1644083130607-b5ecc6cc7e8e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+      { id:'M2', name:'Mie Ayam Bakso', category:'mie', price:30000, desc:'Mie ayam dengan tambahan bakso sapi kenyal yang lezat.', img:'https://i.pinimg.com/736x/46/6d/d3/466dd3d62f2d7a1b6266ba6fa63f97ac.jpg' },
+      { id:'M3', name:'Mie Ayam Pangsit', category:'mie', price:30000, desc:'Mie ayam dilengkapi pangsit kuah lembut yang menggugah selera.', img:'https://i.pinimg.com/1200x/d3/dc/ea/d3dcea0d62d079cd43286e01dc804eee.jpg' },
+      { id:'M4', name:'Mie Ayam Bakso Pangsit', category:'mie', price:33000, desc:'Kombinasi mie ayam dengan bakso sapi dan pangsit kuah sekaligus.', img:'https://i.pinimg.com/1200x/e3/aa/a7/e3aaa74f49feed6a502e9c2fdafa09c5.jpg' },
+      { id:'M5', name:'Mie Ayam Komplit', category:'mie', price:35000, desc:'Mie ayam komplit: tahu isi ikan, bakso ikan, fukian, bakso, dan pangsit. Paling lengkap!', img:'https://i.pinimg.com/1200x/56/3e/d7/563ed7451a14d1dd0f77346b5bebb84c.jpg' },
+      { id:'M6', name:'Kwetiau Ayam', category:'mie', price:25000, desc:'Kwetiau lebar dengan ayam cincang berbumbu khas dan kuah kaldu segar.', img:'https://i.pinimg.com/1200x/76/9e/e4/769ee4b33d876407b52ae69f33c89edb.jpg' },
+      { id:'M7', name:'Kwetiau Ayam Bakso', category:'mie', price:30000, desc:'Kwetiau ayam dengan tambahan bakso sapi kenyal.', img:'https://i.pinimg.com/1200x/70/36/c3/7036c311ee7a90efae7a19aeb2347dee.jpg' },
+      { id:'M8', name:'Kwetiau Ayam Pangsit', category:'mie', price:30000, desc:'Kwetiau ayam dengan pangsit kuah yang lembut dan gurih.', img:'https://i.pinimg.com/1200x/bd/6d/5b/bd6d5bc02c094fe6f93b228b9d881af3.jpg' },
+      { id:'M9', name:'Kwetiau Ayam Bakso Pangsit', category:'mie', price:33000, desc:'Kwetiau ayam dengan bakso dan pangsit sekaligus.', img:'https://i.pinimg.com/1200x/bc/1e/33/bc1e330bc043d5fab7ee69fb7b1533b0.jpg' },
+      { id:'M10', name:'Kwetiau Ayam Komplit', category:'mie', price:35000, desc:'Kwetiau ayam komplit: tahu isi ikan, bakso ikan, fukian, bakso, dan pangsit.', img:'https://i.pinimg.com/736x/fd/46/4d/fd464d809d651aa9502978d33e99238f.jpg' },
+      { id:'M11', name:'Bihun Ayam', category:'mie', price:25000, desc:'Bihun halus dengan ayam cincang berbumbu dan kuah kaldu khas Bangka.', img:'https://i.pinimg.com/1200x/04/67/3f/04673faf8a4d08d46846a1e16bb5d9c3.jpg' },
+      { id:'M12', name:'Bihun Ayam Bakso', category:'mie', price:30000, desc:'Bihun ayam dengan tambahan bakso sapi kenyal.', img:'https://i.pinimg.com/1200x/48/db/51/48db512b9f3790b78cbaf1f6be439f87.jpg' },
+      { id:'M13', name:'Bihun Ayam Pangsit', category:'mie', price:30000, desc:'Bihun ayam dengan pangsit kuah yang lembut.', img:'https://i.pinimg.com/1200x/98/0a/03/980a03bb952df2a62d363913e600bc71.jpg' },
+      { id:'M14', name:'Bihun Ayam Bakso Pangsit', category:'mie', price:33000, desc:'Bihun ayam dengan bakso dan pangsit sekaligus.', img:'https://i.pinimg.com/1200x/52/04/f1/5204f1999c1c3b336ef605f93157529b.jpg' },
+      { id:'M15', name:'Bihun Ayam Komplit', category:'mie', price:35000, desc:'Bihun ayam komplit: tahu isi ikan, bakso ikan, fukian, bakso, dan pangsit.', img:'https://i.pinimg.com/736x/3e/81/67/3e81673a8b56c3a471c5dfee8583f90c.jpg' },
+      { id:'M16', name:'Nasi Tim Ayam', category:'snack', price:22000, desc:'Nasi tim ayam lembut dengan kuah kaldu, cocok sebagai pelengkap.', img:'https://i.pinimg.com/736x/fe/72/40/fe724093701deb94ef5f5ff1149f9da5.jpg' },
+      { id:'M17', name:'Tahu KOK', category:'snack', price:28000, desc:'Tahu kok khas Bangka yang gurih dan kenyal.', img:'https://i.pinimg.com/736x/22/76/db/2276db69d1bf3a43d82ff17da9cb75e0.jpg' },
+      { id:'M18', name:'Bakso Sapi Kuah', category:'snack', price:28000, desc:'Bakso sapi segar dengan kuah kaldu hangat yang gurih.', img:'https://i.pinimg.com/736x/f7/6c/93/f76c93a3a23c2666e107ada4c4f33aec.jpg' },
+      { id:'M19', name:'Pangsit Kuah', category:'snack', price:28000, desc:'Pangsit kuah lembut dengan isian ayam berbumbu.', img:'https://i.pinimg.com/736x/9a/fa/1b/9afa1bb645fb420f169e0e55e0ab840e.jpg' },
+      { id:'M20', name:'Bakso Pangsit Kuah', category:'snack', price:28000, desc:'Kombinasi bakso sapi dan pangsit dalam kuah kaldu yang segar.', img:'https://i.pinimg.com/736x/6c/ad/19/6cad196da7e9541bc3cfa25a68953b90.jpg' },
+      { id:'M21', name:'Nasi Putih', category:'snack', price:6000, desc:'Nasi putih pulen sebagai pelengkap sajian.', img:'https://i.pinimg.com/736x/ce/77/fa/ce77fa4365eaaf514e69bf0f028567ec.jpg' },
+      { id:'M22', name:'Pempek Kapal Selam', category:'snack', price:22000, desc:'Pempek kapal selam isi telur khas Bangka, disajikan dengan cuka pedas khas.', img:'https://www.agoraliarecipes.com/wp-content/uploads/2022/06/AR00042-12-1068x712.jpg' },
+      { id:'M23', name:'Pempek Lenjer', category:'snack', price:22000, desc:'Pempek lenjer panjang khas Bangka dengan tekstur kenyal dan cuka segar.', img:'https://i.pinimg.com/1200x/f1/b3/a4/f1b3a437e05d15fe36bd65112aada5b5.jpg' },
+      { id:'M24', name:'Minuman (Lihat di Tempat)', category:'minuman', price:0, desc:'Tersedia berbagai pilihan minuman. Lihat Menu Minaman di Tempat', img:'https://images.unsplash.com/photo-1499638673689-79a0b5115d87?w=400&q=80' }
+    ];
+
+    let menuData = [];
+    let cart = JSON.parse(localStorage.getItem('sys_cart')) || {};
+
+    function mapCategory(c) {
+      const cat = String(c || '').toLowerCase();
+      if (cat.includes('minum')) return 'minuman';
+      if (cat.includes('pempek') || cat.includes('snack') || cat.includes('camil')) return 'snack';
+      if (cat.includes('mie') || cat.includes('kwetiau') || cat.includes('bihun')) return 'mie';
+      return 'semua';
+    }
+
+    async function initData() {
+      try {
+        const res = await API.menu.list();
+        const rows = res?.data;
+        if (Array.isArray(rows) && rows.length > 0) {
+          menuData = rows
+            .filter(m => m.active !== false)
+            .map(m => ({
+              id: String(m.id),
+              name: m.name,
+              cat: mapCategory(m.category),
+              category: m.category || 'lainnya',
+              price: Number(m.price) || 0,
+              desc: m.desc || `Menu kategori ${m.category || 'lainnya'}`,
+              img: m.img || 'https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=400&q=80'
+            }));
+        } else {
+          menuData = [...fallbackMenu].map(m => ({ ...m, cat: mapCategory(m.category) }));
+        }
+      } catch (e) {
+        menuData = [...fallbackMenu].map(m => ({ ...m, cat: mapCategory(m.category) }));
+      }
+    }
+
+    function renderMenu(data) {
+      const grid = document.getElementById('menuGrid');
+      grid.innerHTML = '';
+      if(data.length === 0) {
+        grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--sub)">Tidak ada menu tersedia di kategori ini.</div>`;
+        return;
+      }
+      data.forEach(m => {
+        const qty = cart[m.id] || 0;
+        const btnText = qty > 0 ? `✓ Ditambahkan (${qty})` : `🛒 Tambah`;
+        const btnClass = qty > 0 ? 'add-btn added' : 'add-btn';
+        
+        grid.innerHTML += `
+          <div class="menu-card">
+            <div class="img-box">
+              <img src="${m.img || 'https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=400&q=80'}" alt="${m.name}">
+            </div>
+            <div class="card-body">
+              <h3>${m.name}</h3>
+              <p class="desc">${m.desc || 'Deskripsi makanan lezat buatan juru masak ahli dapur Resto Bangka Awat.'}</p>
+              <div class="card-footer">
+                <span class="price">Rp ${m.price.toLocaleString('id-ID')}</span>
+                <button class="${btnClass}" id="btn-${m.id}" onclick="addToCart('${m.id}')">${btnText}</button>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    window.addToCart = function(id) {
+      cart[id] = (cart[id] || 0) + 1;
+      localStorage.setItem('sys_cart', JSON.stringify(cart));
+      updateCartUI(id);
+      showToast("Berhasil ditambahkan ke keranjang belanja!");
+    }
+
+    function updateCartUI(id) {
+      const qty = cart[id] || 0;
+      const btn = document.getElementById(`btn-${id}`);
+      if(btn) {
+        btn.textContent = qty > 0 ? `✓ Ditambahkan (${qty})` : `🛒 Tambah`;
+        if(qty > 0) btn.classList.add('added'); else btn.classList.remove('added');
+      }
+      const total = Object.values(cart).reduce((a, b) => a + b, 0);
+      document.getElementById('cartCount').textContent = total;
+    }
+
+    function syncButtons() {
+      Object.keys(cart).forEach(id => updateCartUI(String(id)));
+      document.getElementById('cartCount').textContent = Object.values(cart).reduce((a, b) => a + b, 0);
+    }
+
+    window.filter = function(cat, el) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+      renderMenu(cat === 'semua' ? menuData : menuData.filter(m => m.cat === cat));
+      syncButtons();
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg; t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2200);
+    }
+
+    window.toggleDark = function() {
+      document.getElementById('body').classList.toggle('dark');
+      localStorage.setItem('darkMode', document.getElementById('body').classList.contains('dark'));
+    }
+
+    if (localStorage.getItem('darkMode') === 'true') {
+      document.getElementById('body').classList.add('dark');
+    }
+
+    (async function bootstrap() {
+      await initData();
+      renderMenu(menuData);
+      syncButtons();
+    })();
+  </script>
+</body>
+</html>

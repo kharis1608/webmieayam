@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Mie Ayam Bangka Awat</title>
+  <style>
+    *{box-sizing:border-box;font-family:system-ui,sans-serif;margin:0;padding:0}
+    body{background:#1a1a1a;color:#eee;padding:20px}
+    h1{color:#e8a000}
+    .card{background:#2a2a2a;padding:20px;border-radius:12px;margin:20px 0}
+    a{color:#e8a000}
+  </style>
+</head>
+<body>
+  <h1>🍜 Admin Mie Ayam Awat</h1>
+  <div class="card">
+    <h2>Menu Utama</h2>
+    <ul>
+      <li><a href="kasir.html">Kasir</a></li>
+      <li><a href="1index.html">Beranda</a></li>
+      <li><a href="2menu.html">Menu</a></li>
+      <li><a href="3keranjang.html">Keranjang</a></li>
+    </ul>
+  </div>
+  <div class="card">
+    <h2>Data View</h2>
+    <button onclick="loadData()">Load Data</button>
+    <pre id="output"></pre>
+  </div>
+  <script src="db-view.js"></script>
+  <script>
+    async function loadData() {
+      const res = await fetch('/api/db-view');
+      const data = await res.json();
+      document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+    }
+    loadData();
+  </script>
+</body>
+</html>

@@ -1,0 +1,287 @@
+{
+  "tables": [
+    {
+      "id": "T1",
+      "name": "Meja 1",
+      "status": "kosong"
+    },
+    {
+      "id": "T2",
+      "name": "Meja 2",
+      "status": "kosong"
+    },
+    {
+      "id": "T3",
+      "name": "Meja 3",
+      "status": "kosong"
+    },
+    {
+      "id": "T4",
+      "name": "Meja 4",
+      "status": "kosong"
+    },
+    {
+      "id": "T5",
+      "name": "Meja 5",
+      "status": "kosong"
+    },
+    {
+      "id": "T6",
+      "name": "Meja 6",
+      "status": "kosong"
+    }
+  ],
+  "menuItems": [
+    {
+      "id": "M1",
+      "name": "Mie Ayam",
+      "price": 25000,
+      "category": "mie",
+      "desc": "Mie lembut dengan topping ayam cincang berbumbu khas Bangka, daun bawang, dan kuah gurih.",
+      "img": "https://images.unsplash.com/photo-1644083130607-b5ecc6cc7e8e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "active": true
+    },
+    {
+      "id": "M2",
+      "name": "Mie Ayam Bakso",
+      "price": 30000,
+      "category": "mie",
+      "desc": "Mie ayam dengan tambahan bakso sapi kenyal yang lezat.",
+      "img": "https://i.pinimg.com/736x/46/6d/d3/466dd3d62f2d7a1b6266ba6fa63f97ac.jpg",
+      "active": true
+    },
+    {
+      "id": "M3",
+      "name": "Mie Ayam Pangsit",
+      "price": 30000,
+      "category": "mie",
+      "desc": "Mie ayam dilengkapi pangsit kuah lembut yang menggugah selera.",
+      "img": "https://i.pinimg.com/1200x/d3/dc/ea/d3dcea0d62d079cd43286e01dc804eee.jpg",
+      "active": true
+    },
+    {
+      "id": "M4",
+      "name": "Mie Ayam Bakso Pangsit",
+      "price": 33000,
+      "category": "mie",
+      "desc": "Kombinasi mie ayam dengan bakso sapi dan pangsit kuah sekaligus.",
+      "img": "https://i.pinimg.com/1200x/e3/aa/a7/e3aaa74f49feed6a502e9c2fdafa09c5.jpg",
+      "active": true
+    },
+    {
+      "id": "M5",
+      "name": "Mie Ayam Komplit",
+      "price": 35000,
+      "category": "mie",
+      "desc": "Mie ayam komplit: tahu isi ikan, bakso ikan, fukian, bakso, dan pangsit. Paling lengkap!",
+      "img": "https://i.pinimg.com/1200x/56/3e/d7/563ed7451a14d1dd0f77346b5bebb84c.jpg",
+      "active": true
+    },
+    {
+      "id": "M6",
+      "name": "Kwetiau Ayam",
+      "price": 25000,
+      "category": "mie",
+      "desc": "Kwetiau lebar dengan ayam cincang berbumbu khas dan kuah kaldu segar.",
+      "img": "https://i.pinimg.com/1200x/76/9e/e4/769ee4b33d876407b52ae69f33c89edb.jpg",
+      "active": true
+    },
+    {
+      "id": "M7",
+      "name": "Kwetiau Ayam Bakso",
+      "price": 30000,
+      "category": "mie",
+      "desc": "Kwetiau ayam dengan tambahan bakso sapi kenyal.",
+      "img": "https://i.pinimg.com/1200x/70/36/c3/7036c311ee7a90efae7a19aeb2347dee.jpg",
+      "active": true
+    },
+    {
+      "id": "M8",
+      "name": "Kwetiau Ayam Pangsit",
+      "price": 30000,
+      "category": "mie",
+      "desc": "Kwetiau ayam dengan pangsit kuah yang lembut dan gurih.",
+      "img": "https://i.pinimg.com/1200x/bd/6d/5b/bd6d5bc02c094fe6f93b228b9d881af3.jpg",
+      "active": true
+    },
+    {
+      "id": "M9",
+      "name": "Kwetiau Ayam Bakso Pangsit",
+      "price": 33000,
+      "category": "mie",
+      "desc": "Kwetiau ayam dengan bakso dan pangsit sekaligus.",
+      "img": "https://i.pinimg.com/1200x/bc/1e/33/bc1e330bc043d5fab7ee69fb7b1533b0.jpg",
+      "active": true
+    },
+    {
+      "id": "M10",
+      "name": "Kwetiau Ayam Komplit",
+      "price": 35000,
+      "category": "mie",
+      "desc": "Kwetiau ayam komplit: tahu isi ikan, bakso ikan, fukian, bakso, dan pangsit.",
+      "img": "https://i.pinimg.com/736x/fd/46/4d/fd464d809d651aa9502978d33e99238f.jpg",
+      "active": true
+    },
+    {
+      "id": "M11",
+      "name": "Bihun Ayam",
+      "price": 25000,
+      "category": "mie",
+      "desc": "Bihun halus dengan ayam cincang berbumbu dan kuah kaldu khas Bangka.",
+      "img": "https://i.pinimg.com/1200x/04/67/3f/04673faf8a4d08d46846a1e16bb5d9c3.jpg",
+      "active": true
+    },
+    {
+      "id": "M12",
+      "name": "Bihun Ayam Bakso",
+      "price": 30000,
+      "category": "mie",
+      "desc": "Bihun ayam dengan tambahan bakso sapi kenyal.",
+      "img": "https://i.pinimg.com/1200x/48/db/51/48db512b9f3790b78cbaf1f6be439f87.jpg",
+      "active": true
+    },
+    {
+      "id": "M13",
+      "name": "Bihun Ayam Pangsit",
+      "price": 30000,
+      "category": "mie",
+      "desc": "Bihun ayam dengan pangsit kuah yang lembut.",
+      "img": "https://i.pinimg.com/1200x/98/0a/03/980a03bb952df2a62d363913e600bc71.jpg",
+      "active": true
+    },
+    {
+      "id": "M14",
+      "name": "Bihun Ayam Bakso Pangsit",
+      "price": 33000,
+      "category": "mie",
+      "desc": "Bihun ayam dengan bakso dan pangsit sekaligus.",
+      "img": "https://i.pinimg.com/1200x/52/04/f1/5204f1999c1c3b336ef605f93157529b.jpg",
+      "active": true
+    },
+    {
+      "id": "M15",
+      "name": "Bihun Ayam Komplit",
+      "price": 35000,
+      "category": "mie",
+      "desc": "Bihun ayam komplit: tahu isi ikan, bakso ikan, fukian, bakso, dan pangsit.",
+      "img": "https://i.pinimg.com/736x/3e/81/67/3e81673a8b56c3a471c5dfee8583f90c.jpg",
+      "active": true
+    },
+    {
+      "id": "M16",
+      "name": "Nasi Tim Ayam",
+      "price": 22000,
+      "category": "snack",
+      "desc": "Nasi tim ayam lembut dengan kuah kaldu, cocok sebagai pelengkap.",
+      "img": "https://i.pinimg.com/736x/fe/72/40/fe724093701deb94ef5f5ff1149f9da5.jpg",
+      "active": true
+    },
+    {
+      "id": "M17",
+      "name": "Tahu KOK",
+      "price": 28000,
+      "category": "snack",
+      "desc": "Tahu kok khas Bangka yang gurih dan kenyal.",
+      "img": "https://i.pinimg.com/736x/22/76/db/2276db69d1bf3a43d82ff17da9cb75e0.jpg",
+      "active": true
+    },
+    {
+      "id": "M18",
+      "name": "Bakso Sapi Kuah",
+      "price": 28000,
+      "category": "snack",
+      "desc": "Bakso sapi segar dengan kuah kaldu hangat yang gurih.",
+      "img": "https://i.pinimg.com/736x/f7/6c/93/f76c93a3a23c2666e107ada4c4f33aec.jpg",
+      "active": true
+    },
+    {
+      "id": "M19",
+      "name": "Pangsit Kuah",
+      "price": 28000,
+      "category": "snack",
+      "desc": "Pangsit kuah lembut dengan isian ayam berbumbu.",
+      "img": "https://i.pinimg.com/736x/9a/fa/1b/9afa1bb645fb420f169e0e55e0ab840e.jpg",
+      "active": true
+    },
+    {
+      "id": "M20",
+      "name": "Bakso Pangsit Kuah",
+      "price": 28000,
+      "category": "snack",
+      "desc": "Kombinasi bakso sapi dan pangsit dalam kuah kaldu yang segar.",
+      "img": "https://i.pinimg.com/736x/6c/ad/19/6cad196da7e9541bc3cfa25a68953b90.jpg",
+      "active": true
+    },
+    {
+      "id": "M21",
+      "name": "Nasi Putih",
+      "price": 6000,
+      "category": "snack",
+      "desc": "Nasi putih pulen sebagai pelengkap sajian.",
+      "img": "https://i.pinimg.com/736x/ce/77/fa/ce77fa4365eaaf514e69bf0f028567ec.jpg",
+      "active": true
+    },
+    {
+      "id": "M22",
+      "name": "Pempek Kapal Selam",
+      "price": 22000,
+      "category": "snack",
+      "desc": "Pempek kapal selam isi telur khas Bangka, disajikan dengan cuka pedas khas.",
+      "img": "https://www.agoraliarecipes.com/wp-content/uploads/2022/06/AR00042-12-1068x712.jpg",
+      "active": true
+    },
+    {
+      "id": "M23",
+      "name": "Pempek Lenjer",
+      "price": 22000,
+      "category": "snack",
+      "desc": "Pempek lenjer panjang khas Bangka dengan tekstur kenyal dan cuka segar.",
+      "img": "https://i.pinimg.com/1200x/f1/b3/a4/f1b3a437e05d15fe36bd65112aada5b5.jpg",
+      "active": true
+    },
+    {
+      "id": "M24",
+      "name": "Minuman (Lihat di Tempat)",
+      "price": 0,
+      "category": "minuman",
+      "desc": "Tersedia berbagai pilihan minuman. Lihat Menu Minaman di Tempat",
+      "img": "https://images.unsplash.com/photo-1499638673689-79a0b5115d87?w=400&q=80",
+      "active": true
+    }
+  ],
+  "settings": {
+    "taxRate": 0.1,
+    "serviceFeeRate": 0.02,
+    "tableCount": 6,
+    "currency": "IDR"
+  },
+  "orders": [
+    {
+      "id": "ORD-C396B6A3-MR06GMXI",
+      "meja": "T1",
+      "status": "sudah_dibayar",
+      "catatan": "",
+      "items": [
+        {
+          "name": "Mie Ayam",
+          "qty": 3,
+          "price": 25000
+        }
+      ],
+      "subtotal": 75000,
+      "tax": 7500,
+      "serviceFee": 1500,
+      "total": 84000,
+      "timestamp": 1782795587090
+    }
+  ],
+  "payments": [
+    {
+      "id": "PAY-A011486A-MR06HCAC",
+      "order_id": "ORD-C396B6A3-MR06GMXI",
+      "method": "midtrans",
+      "amount": 84000,
+      "paid_at": 1782795619956
+    }
+  ]
+}
